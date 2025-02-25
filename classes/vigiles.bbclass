@@ -113,7 +113,7 @@ python do_collect_build_deps() {
     vigiles_collect_pkg_info(d)
 }
 
-addtask do_collect_build_deps after do_package do_packagedata do_unpack before do_populate_sdk do_build do_rm_work
+addtask do_collect_build_deps after do_packagedata do_unpack before do_populate_sdk do_build do_rm_work
 do_collect_build_deps[nostamp] = "1"
 do_collect_build_deps[deptask] = "do_collect_build_deps"
 
@@ -739,7 +739,7 @@ python do_vigiles_image() {
     vigiles_write_manifest(d, "cve", cve_manifest)
 }
 
-addtask do_vigiles_image after do_rootfs before do_image
+addtask do_vigiles_image after do_collect_build_deps do_rootfs before do_image
 do_vigiles_image[nostamp] = "1"
 do_rootfs[nostamp] = "1"
 do_rootfs[recrdeptask] += "do_vigiles_pkg"
@@ -980,6 +980,7 @@ python() {
 }
 
 do_vigiles_uboot_config[nostamp] = "1"
+addtask do_vigiles_uboot_config after do_vigiles_pkg
 
 
 python do_vigiles_check() {
