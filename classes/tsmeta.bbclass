@@ -105,11 +105,12 @@ def tsmeta_get_type_glob(d, tsm_type):
 
 def tsmeta_read_json(d, trj_path):
     import json
-    dict_in = dict()
-    if os.path.exists(trj_path):
-        with open(trj_path) as f:
-            dict_in = json.load(f)
-    return dict_in
+
+    if not os.path.exists(trj_path) or os.path.getsize(trj_path) == 0:
+        tsmeta_write_json(d, {}, trj_path)
+
+    with open(trj_path) as f:
+        return json.load(f)
 
 def tsmeta_write_json(d, dict_out, twj_path):
     import json
